@@ -51,4 +51,9 @@ public class showsService {
         if (type == null) return showRepository.findByFeaturedTrue();
         return showRepository.findByTypeAndFeaturedTrue(type);
     }
+
+    public List<showsModel> searchByQueryAndType(String q, @Nullable String type) {
+        if (type == null) return showRepository.findByTitleContainingIgnoreCase(q);
+        return showRepository.findShowsByTypeAndTitleContainingIgnoreCase(type, q);
+    }
 }

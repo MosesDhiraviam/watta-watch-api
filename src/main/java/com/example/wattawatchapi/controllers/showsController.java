@@ -40,24 +40,7 @@ public class showsController extends controller {
         return success(showsService.getMovies());
     }
 
-    @GetMapping("/featured")
-    public ResponseEntity<List<showsModel>> getFeaturedShows(
-            @RequestParam(value = "type", required = false) String type) {
-        if (type == null || type.equals("movies") || type.equals("series")) {
-            return success(showsService.getFeaturedShows(type));
-        } else return badRequest();
-    }
-
-//    @GetMapping("/search")
-//    public ResponseEntity<List<showsModel>> searchShows(
-//            @RequestParam("q") String q,
-//            @RequestParam(value = "type", required = false) String type) {
-//        if (type == null || type.equals("movies") || type.equals("series")) {
-//            return success(showsService.searchByQueryAndType(q, type));
-//        } else return badRequest();
-//    }
-
-    @GetMapping("/details/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<showsModel> getShowById(@PathVariable("id") String id) {
         Optional<showsModel> show = showsService.getShowById(id);
         if (show.isPresent()) {
@@ -67,6 +50,25 @@ public class showsController extends controller {
         }
     }
 
+    @GetMapping("/featured")
+    public ResponseEntity<List<showsModel>> getFeaturedShows(
+            @RequestParam(value = "type", required = false) String type) {
+        if (type == null || type.equals("movies") || type.equals("series")) {
+            return success(showsService.getFeaturedShows(type));
+        } else return badRequest();
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<List<showsModel>> searchShows(
+            @RequestParam("q") String q,
+            @RequestParam(value = "type", required = false) String type) {
+        if (type == null || type.equals("movies") || type.equals("series")) {
+            return success(showsService.searchByQueryAndType(q, type));
+        } else return badRequest();
+    }
+
+
+
     @PutMapping("/{id}")
     public ResponseEntity<showsModel> updateShowById(
             @PathVariable("id") String id,
@@ -74,15 +76,15 @@ public class showsController extends controller {
 
         Optional<showsModel> showData = showsService.getShowById(id);
         if (showData.isPresent()) {
-            showsModel _show = showData.get();
-            _show.setTitle(show.getTitle());
-            _show.setFeatured(show.getFeatured());
-            _show.setBanner(show.getBanner());
-            _show.setPoster(show.getPoster());
-            _show.setDescription(show.getDescription());
-            _show.setBuyPrice(show.getBuyPrice());
-            _show.setRentPrice(show.getRentPrice());
-            return success(showsService.updateShow(_show));
+            showsModel newShow = showData.get();
+            newShow.setTitle(show.getTitle());
+            newShow.setFeatured(show.getFeatured());
+            newShow.setBanner(show.getBanner());
+            newShow.setPoster(show.getPoster());
+            newShow.setDescription(show.getDescription());
+            newShow.setBuyPrice(show.getBuyPrice());
+            newShow.setRentPrice(show.getRentPrice());
+            return success(showsService.updateShow(newShow));
         }
         return notFound();
     }

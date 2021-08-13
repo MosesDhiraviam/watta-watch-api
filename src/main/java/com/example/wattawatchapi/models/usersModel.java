@@ -17,19 +17,19 @@ public class usersModel implements UserDetails {
     @Id
     private String id;
 
-    @NotBlank(message = "First name is required")
+    @NotBlank(message = "First name is mandatory")
     private String firstName;
 
-    @NotBlank(message = "Last name is required")
+    @NotBlank(message = "Last name is mandatory")
     private String lastName;
 
-    @Pattern(regexp = "^(.+)@(.+)$", message = "Not a valid e-mail address")
+    @Pattern(regexp = "^(.+)@(.+)$", message = "provide a valid e-mail address")
     @Indexed(unique = true)
     private String email;
 
     @Pattern(
             regexp = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[@$!%*#?&])[A-Za-z\\d@$!%*#?&]{8,}$",
-            message = "Password must contain minimum eight characters, at least one letter, one number and one special character")
+            message = "Password must be a strong password with one special character and one number")
     private String password;
 
     public String getId() {
@@ -68,6 +68,10 @@ public class usersModel implements UserDetails {
         return password;
     }
 
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return new ArrayList<>();
@@ -98,8 +102,6 @@ public class usersModel implements UserDetails {
         return true;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
+
 }
 

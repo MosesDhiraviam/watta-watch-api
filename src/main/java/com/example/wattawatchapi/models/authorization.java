@@ -8,13 +8,13 @@ import javax.validation.constraints.Pattern;
 @Document(collection = "users")
 public class authorization {
 
-    @Pattern(regexp = "^(.+)@(.+)$", message = "Not a valid e-mail address")
+    @Pattern(regexp = "^(.+)@(.+)$", message = "provide a valid e-mail address")
     @Indexed(unique = true)
     private String email;
 
     @Pattern(
             regexp = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[@$!%*#?&])[A-Za-z\\d@$!%*#?&]{8,}$",
-            message = "Password must contain minimum eight characters, at least one letter, one number and one special character")
+            message = "Password must be a strong password with at least one special character and a number")
     private String password;
 
     public String getEmail() {
